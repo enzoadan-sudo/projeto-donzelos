@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life-Branch | Configurações do Perfil</title>
+  <link rel="stylesheet" href="perfil_usuario.css">
+</head>
+<body>
+
+
+  <header>
+    <a href="dashboard.html">💰 Life-Branch</a>
+    <nav>
+      <ul>
+        <li><a href="dashboard.html">Painel</a></li>
+        <li><a href="formulario.html">Nova Simulação</a></li>
+        <li><a href="perfil.html"><strong>Minha Conta</strong></a></li>
+        <li><a href="login.html">Sair</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <hr>
+
+  <div id="layout-perfil">
+    
+ 
+    <aside>
+      <h2>⚙️ Configurações</h2>
+      <nav>
+        <ul>
+          <li><a href="#dados-pessoais">👤 Dados Pessoais</a></li>
+          <li><a href="#seguranca">🔒 Segurança e Senha</a></li>
+          <li><a href="#preferencias">🎛️ Preferências da Simulação</a></li>
+          <li><a href="#privacidade">🛡️ Privacidade e Dados</a></li>
+          <li><a href="#zona-perigo"><mark>⚠️ Zona de Perigo</mark></a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <hr>
+
+  
+    <main>
+      
+    
+      <section id="resumo-perfil">
+        <figure>
+          <img src="https://via.placeholder.com/120" alt="Foto de Perfil de Maria Silva" width="120" height="120">
+          <figcaption><button type="button">📷 Alterar Foto</button></figcaption>
+        </figure>
+        
+        <div>
+          <h1>Maria Silva</h1>
+          <p>Membro desde: <time datetime="2026-03-15">15 de Março de 2026</time></p>
+          <p>Tipo de Plano: <strong>Acadêmico (Gratuito)</strong></p>
+        </div>
+      </section>
+
+      <hr>
+
+      
+      <section id="dados-pessoais">
+        <h2>👤 Dados Pessoais</h2>
+        
+        <form action="#" method="POST">
+          <fieldset>
+            <legend>Informações Cadastrais</legend>
+            <br>
+            
+            <div>
+              <label for="nome-completo">Nome Completo:</label><br>
+              <input type="text" id="nome-completo" name="nome" value="Maria Silva" required>
+            </div>
+
+            <br>
+
+            <div>
+              <label for="email-usuario">Endereço de E-mail:</label><br>
+              <input type="email" id="email-usuario" name="email" value="maria.silva@email.com" required>
+              <small>*(Este e-mail é usado para login e alertas do sistema)*</small>
+            </div>
+
+            <br>
+
+            <div>
+              <label for="data-nascimento">Data de Nascimento:</label><br>
+              <input type="date" id="data-nascimento" name="data-nascimento" value="2000-05-20">
+            </div>
+
+            <br>
+
+            <div>
+              <label for="cidade-base">Cidade Base Atual:</label><br>
+              <input type="text" id="cidade-base" name="cidade-base" value="São Paulo - SP">
+            </div>
+
+            <br>
+
+            <button type="submit">💾 Salvar Alterações Pessoais</button>
+          </fieldset>
+        </form>
+      </section>
+
+      <hr>
+
+     
+      <section id="seguranca">
+        <h2>🔒 Segurança da Conta</h2>
+
+        <form action="#" method="POST">
+          <fieldset>
+            <legend>Alterar Senha</legend>
+            <br>
+
+            <div>
+              <label for="senha-atual">Senha Atual:</label><br>
+              <input type="password" id="senha-atual" name="senha-atual" required>
+            </div>
+
+            <br>
+
+            <div>
+              <label for="nova-senha">Nova Senha:</label><br>
+              <input type="password" id="nova-senha" name="nova-senha" minlength="8" required>
+            </div>
+
+            <br>
+
+            <div>
+              <label for="confirma-nova-senha">Confirmar Nova Senha:</label><br>
+              <input type="password" id="confirma-nova-senha" name="confirma-nova-senha" required>
+            </div>
+
+            <br>
+
+            <button type="submit">🔑 Atualizar Senha</button>
+          </fieldset>
+        </form>
+      </section>
+
+      <hr>
+
+      <section id="preferencias">
+        <h2>🎛️ Preferências do Algoritmo</h2>
+
+        <form action="#" method="POST">
+          <fieldset>
+            <legend>Parâmetros Padrão de Cálculo</legend>
+            <br>
+
+            <div>
+              <label for="sensibilidade-risco">Sensibilidade ao Risco Econômico (Slider Nativo):</label><br>
+              <span>Conservador</span>
+              <input type="range" id="sensibilidade-risco" name="sensibilidade-risco" min="1" max="5" value="3">
+              <span>Arrojado</span>
+            </div>
+
+            <br>
+
+            <div>
+              <label for="moeda">Moeda Padrão das Projeções:</label><br>
+              <select id="moeda" name="moeda">
+                <option value="BRL" selected>BRL (R$) - Real Brasileiro</option>
+                <option value="USD">USD ($) - Dólar Americano</option>
+                <option value="EUR">EUR (€) - Euro</option>
+              </select>
+            </div>
+
+            <br>
+
+            <div>
+              <input type="checkbox" id="notif-email" name="notif-email" checked>
+              <label for="notif-email">Receber alertas de atualização de dados de inflação por e-mail</label>
+            </div>
+
+            <br>
+
+            <button type="submit">⚙️ Salvar Preferências</button>
+          </fieldset>
+        </form>
+      </section>
+
+      <hr>
+
+
+      <section id="privacidade">
+        <h2>🛡️ Privacidade e Termos de Uso</h2>
+
+        <details>
+          <summary><strong>Como seus dados são utilizados pelo algoritmo?</strong></summary>
+          <p>Seus dados de renda e patrimônio são utilizados exclusivamente para gerar as projeções em tempo de execução. Não vendemos suas informações para terceiros nem usamos seus dados financeiros para anúncios personalizados.</p>
+        </details>
+
+        <br>
+
+        <details>
+          <summary><strong>Exportação de Dados (LGPD)</strong></summary>
+          <p>Você pode baixar uma cópia em formato JSON de todas as simulações e históricos salvos em sua conta a qualquer momento.</p>
+          <button type="button" onclick="alert('Gerando arquivo com seus dados...')">📥 Baixar Meus Dados (.JSON)</button>
+        </details>
+      </section>
+
+      <hr>
+
+     
+      <section id="zona-perigo">
+        <h2>⚠️ Zona de Perigo</h2>
+
+        <article>
+          <h3>Excluir Conta Permanentemente</h3>
+          <p>Esta ação apagará todo o seu histórico de simulações, relatórios salvos e dados pessoais. <strong>Esta ação não pode ser desfeita.</strong></p>
+          
+          <button type="button" onclick="confirm('Tem certeza absoluta que deseja excluir sua conta?')">
+            🗑️ Excluir Minha Conta Permanentemente
+          </button>
+        </article>
+      </section>
+
+    </main>
+  </div>
+
+  <hr>
+
+
+  <footer>
+    <p>&copy; 2026 Senai-cetaf. Projeto Acadêmico de Desenvolvimento Web.</p>
+  </footer>
+
+</body>
+</html>
