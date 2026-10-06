@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life-Branch | Nova Simulação</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="formulario_sumilacao.css">
+</head>
+<body>
+  <header id="topo"></header>
+
+  <main class="pagina">
+    <section class="card">
+      <h1>Nova Simulação de Vida</h1>
+      <p class="intro">Preencha as etapas abaixo para projetar o impacto financeiro e na qualidade de vida da sua decisão.</p>
+
+      <form id="form-simulacao" novalidate>
+        <fieldset>
+          <legend><strong>Etapa 1: Sua Situação Atual</strong></legend>
+          <div class="campo">
+            <label for="nome-projeto">Nome do Projeto (opcional):</label>
+            <input type="text" id="nome-projeto" name="nome-projeto" maxlength="60" placeholder="Ex: Transição para TI">
+          </div>
+          <div class="grade">
+            <div class="campo">
+              <label for="cidade-atual">Cidade onde você mora hoje:</label>
+              <input type="text" id="cidade-atual" name="cidade-atual" placeholder="Ex: São Paulo - SP" required>
+            </div>
+            <div class="campo">
+              <label for="renda-atual">Renda Mensal Atual (R$):</label>
+              <input type="number" id="renda-atual" name="renda-atual" min="0" step="100" placeholder="Ex: 3800" required>
+            </div>
+            <div class="campo">
+              <label for="custo-atual">Custo de Vida Mensal Atual (R$):</label>
+              <input type="number" id="custo-atual" name="custo-atual" min="0" step="100" placeholder="Ex: 2900" required>
+            </div>
+            <div class="campo">
+              <label for="reserva">Reserva de Emergência Atual (R$):</label>
+              <input type="number" id="reserva" name="reserva" min="0" step="500" placeholder="Ex: 10000" required>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><strong>Etapa 2: O Novo Cenário</strong></legend>
+          <div class="campo">
+            <label for="tipo-mudanca">Tipo de Mudança Pretendida:</label>
+            <select id="tipo-mudanca" name="tipo-mudanca" required>
+              <option value="">-- Selecione uma opção --</option>
+              <option value="carreira">Transição de Carreira / Nova Profissão</option>
+              <option value="cidade">Mudança de Cidade / Estado</option>
+              <option value="ambos">Mudança de Cidade + Transição de Carreira</option>
+            </select>
+          </div>
+          <div class="campo" id="campo-destino">
+            <label for="cidade-destino">Cidade de Destino (se for mudar):</label>
+            <input type="text" id="cidade-destino" name="cidade-destino" placeholder="Ex: Florianópolis - SC">
+            <small>Cidades com índice de custo de vida cadastrado: capitais e algumas cidades grandes. Para outras, usamos uma média.</small>
+          </div>
+          <div class="grade">
+            <div class="campo">
+              <label for="nova-renda">Estimativa de Renda no Novo Cenário (R$):</label>
+              <input type="number" id="nova-renda" name="nova-renda" min="0" step="100" placeholder="Ex: 4500">
+              <small>Se deixar em branco, usamos sua renda atual.</small>
+            </div>
+            <div class="campo">
+              <label for="custo-transicao">Custo Inicial de Transição/Mudança (R$):</label>
+              <input type="number" id="custo-transicao" name="custo-transicao" min="0" step="500" placeholder="Ex: 5000">
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><strong>Etapa 3: Parâmetros da Simulação</strong></legend>
+          <div class="campo">
+            <label for="prazo">Prazo de Projeção no Tempo:</label>
+            <select id="prazo" name="prazo" required>
+              <option value="3">3 anos</option>
+              <option value="5" selected>5 anos</option>
+              <option value="10">10 anos</option>
+            </select>
+          </div>
+          <div class="campo">
+            <span class="rotulo" id="rotulo-risco">Sua Tolerância a Risco Financeiro:</span>
+            <div class="opcoes" role="radiogroup" aria-labelledby="rotulo-risco">
+              <label for="risco-baixo"><input type="radio" id="risco-baixo" name="risco" value="conservador" checked> Conservador (prefiro mais estabilidade)</label>
+              <label for="risco-medio"><input type="radio" id="risco-medio" name="risco" value="moderado"> Moderado</label>
+              <label for="risco-alto"><input type="radio" id="risco-alto" name="risco" value="arrojado"> Arrojado (aceito oscilações por maior ganho)</label>
+            </div>
+          </div>
+        </fieldset>
+
+        <p class="erro" id="erro-form" role="alert" hidden></p>
+
+        <div class="acoes-form">
+          <button type="submit" class="btn">🚀 Gerar Projeção de Vida</button>
+          <button type="reset" class="btn btn-outline" id="btn-limpar">Limpar</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer id="rodape"></footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function () {
+      var $ = function (id) { return document.getElementById(id); };
+      var form = $('form-simulacao');
+
+      // Mostra/oculta o campo de cidade de destino conforme o tipo de mudança
+      function atualizarDestino() {
+        var t = $('tipo-mudanca').value;
+        var usa = t === 'cidade' || t === 'ambos';
+        $('campo-destino').hidden = !usa;
+        $('cidade-destino').required = usa;
+        if (!usa) $('cidade-destino').value = '';
+      }
+      $('tipo-mudanca').addEventListener('change', atualizarDestino);
+
+      // Pré-preenchimento: edição de uma simulação anterior, ou dados do perfil
+      function preencher() {
+        var u = LB.usuario();
+        var ult = LB.ultimaSim();
+        if (LB.paramURL('editar') && ult && ult.inputs) {
+          var i = ult.inputs;
+          $('nome-projeto').value = ult.nome || '';
+          $('cidade-atual').value = i.cidadeAtual || '';
+          $('renda-atual').value = i.rendaAtual;
+          $('custo-atual').value = i.custoAtual;
+          $('reserva').value = i.reserva;
+          $('tipo-mudanca').value = i.tipo;
+          $('cidade-destino').value = i.cidadeDestino || '';
+          $('nova-renda').value = i.novaRenda || '';
+          $('custo-transicao').value = i.custoTransicao || '';
+          $('prazo').value = String(i.prazo);
+          var r = document.querySelector('input[name="risco"][value="' + i.risco + '"]');
+          if (r) r.checked = true;
+        } else if (u) {
+          if (u.cidade) $('cidade-atual').value = u.cidade;
+          var nivel = u.prefs && u.prefs.risco ? Number(u.prefs.risco) : 3;
+          var v = nivel <= 2 ? 'conservador' : nivel >= 4 ? 'arrojado' : 'moderado';
+          document.querySelector('input[name="risco"][value="' + v + '"]').checked = true;
+        }
+        atualizarDestino();
+      }
+      preencher();
+
+      $('btn-limpar').addEventListener('click', function () {
+        setTimeout(atualizarDestino, 0);
+        $('erro-form').hidden = true;
+      });
+
+      function erro(msg) { var p = $('erro-form'); p.textContent = msg; p.hidden = false; p.scrollIntoView({ block: 'center' }); }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var tipo = $('tipo-mudanca').value;
+        var cidadeAtual = $('cidade-atual').value.trim();
+        var rendaAtual = parseFloat($('renda-atual').value);
+        var custoAtual = parseFloat($('custo-atual').value);
+        var reserva = parseFloat($('reserva').value);
+
+        if (!cidadeAtual) return erro('Informe a cidade onde você mora hoje.');
+        if (isNaN(rendaAtual) || rendaAtual <= 0) return erro('Informe sua renda mensal atual (maior que zero).');
+        if (isNaN(custoAtual) || custoAtual < 0) return erro('Informe seu custo de vida mensal atual.');
+        if (isNaN(reserva) || reserva < 0) return erro('Informe sua reserva de emergência (use 0 se não tiver).');
+        if (!tipo) return erro('Selecione o tipo de mudança pretendida.');
+        var destino = $('cidade-destino').value.trim();
+        if ((tipo === 'cidade' || tipo === 'ambos') && !destino) return erro('Informe a cidade de destino.');
+
+        var inputs = {
+          tipo: tipo,
+          cidadeAtual: cidadeAtual,
+          cidadeDestino: destino,
+          rendaAtual: rendaAtual,
+          custoAtual: custoAtual,
+          reserva: reserva,
+          novaRenda: parseFloat($('nova-renda').value) || 0,
+          custoTransicao: parseFloat($('custo-transicao').value) || 0,
+          prazo: parseInt($('prazo').value, 10),
+          risco: document.querySelector('input[name="risco"]:checked').value
+        };
+
+        var nome = $('nome-projeto').value.trim();
+        if (!nome) {
+          nome = tipo === 'carreira' ? 'Transição de carreira'
+               : tipo === 'cidade' ? 'Mudança para ' + destino
+               : 'Mudança para ' + destino + ' + nova carreira';
+        }
+
+        LB.guardarUltima({
+          id: LB.gerarId(),
+          nome: nome,
+          criadoEm: new Date().toISOString(),
+          inputs: inputs,
+          resultado: LB.simular(inputs)
+        });
+        location.href = 'tela_resultado.html';
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+/* formulario_simulacao.css */
+.intro { color: var(--ink-muted); margin: 0.4rem 0 1.5rem; }
+
+.opcoes { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.3rem; }
+.opcoes label { display: flex; align-items: center; gap: 0.6rem; font-weight: 400; font-size: 0.95rem; cursor: pointer; }
+
+.acoes-form { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
+#erro-form { margin-bottom: 1rem; padding: 0.75rem 1rem; border: 1px solid var(--danger); border-radius: var(--radius-sm); }

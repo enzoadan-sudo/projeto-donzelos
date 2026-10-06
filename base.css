@@ -1,0 +1,273 @@
+/* ============================================
+   Life-Branch — base.css (estilos compartilhados)
+   Conceito: "livro-razão financeiro" — papel, tinta
+   e uma trilha verde de crescimento; dourado só
+   para valores em dinheiro.
+   ============================================ */
+
+   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
+
+   :root {
+     --paper: #eef1e7;
+     --paper-raised: #ffffff;
+     --ink: #16241d;
+     --ink-muted: #5b6b60;
+     --forest: #1f5d50;
+     --forest-deep: #163f37;
+     --gold: #a8791f;
+     --gold-soft: #f4e9d2;
+     --danger: #a83b2e;
+     --success: #1f5d50;
+     --warning: #a8791f;
+     --border: #d9dcc8;
+   
+     --shadow-sm: 0 1px 2px 0 rgb(22 36 29 / 0.06);
+     --shadow-md: 0 8px 20px -6px rgb(22 36 29 / 0.18);
+   
+     --font-display: 'Fraunces', Georgia, serif;
+     --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+   
+     --radius-sm: 8px;
+     --radius-md: 14px;
+     --content-width: 1080px;
+     --transition: all 0.18s ease-in-out;
+   }
+   
+   @media (prefers-color-scheme: dark) {
+     :root {
+       --paper: #101d17;
+       --paper-raised: #17251e;
+       --ink: #eaf2ec;
+       --ink-muted: #93a89b;
+       --forest: #4fa88f;
+       --forest-deep: #3c8672;
+       --gold: #e0b15c;
+       --gold-soft: #2b2415;
+       --danger: #e0766a;
+       --success: #4fa88f;
+       --warning: #e0b15c;
+       --border: #2a3d33;
+       --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.35);
+       --shadow-md: 0 8px 24px -8px rgb(0 0 0 / 0.55);
+     }
+   }
+   
+   /* ---------- Reset ---------- */
+   * { margin: 0; padding: 0; box-sizing: border-box; }
+   
+   html { scroll-behavior: smooth; }
+   
+   body {
+     font-family: var(--font-body);
+     background-color: var(--paper);
+     color: var(--ink);
+     line-height: 1.6;
+     min-height: 100vh;
+     display: flex;
+     flex-direction: column;
+   }
+   
+   hr { display: none; }
+   img { max-width: 100%; }
+   a { color: inherit; }
+   h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; }
+   section[id] { scroll-margin-top: 5rem; }
+   
+   /* ---------- Cabeçalho ---------- */
+   .topo {
+     position: sticky;
+     top: 0;
+     z-index: 10;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     flex-wrap: wrap;
+     gap: 0.75rem 1.5rem;
+     padding: 1rem clamp(1.25rem, 4vw, 3rem);
+     background-color: var(--paper);
+     border-bottom: 1px solid var(--border);
+   }
+   
+   .topo .logo {
+     font-family: var(--font-display);
+     font-weight: 600;
+     font-size: 1.25rem;
+     text-decoration: none;
+   }
+   
+   .topo nav ul {
+     list-style: none;
+     display: flex;
+     align-items: center;
+     flex-wrap: wrap;
+     gap: clamp(0.75rem, 2.5vw, 2rem);
+   }
+   
+   .topo nav a {
+     text-decoration: none;
+     font-size: 0.95rem;
+     color: var(--ink-muted);
+     transition: var(--transition);
+   }
+   
+   .topo nav a:hover,
+   .topo nav a:focus-visible,
+   .topo nav a[aria-current="page"] { color: var(--ink); }
+   
+   .topo nav a[aria-current="page"] { font-weight: 600; }
+   
+   .topo nav a.nav-cta {
+     color: #fdfdfa;
+     background-color: var(--forest);
+     padding: 0.5rem 1.1rem;
+     border-radius: 999px;
+     font-weight: 500;
+   }
+   
+   .topo nav a.nav-cta:hover,
+   .topo nav a.nav-cta:focus-visible { background-color: var(--forest-deep); color: #fdfdfa; }
+   
+   /* ---------- Layout ---------- */
+   main { flex: 1; width: 100%; }
+   
+   main.pagina {
+     max-width: 900px;
+     margin: 0 auto;
+     padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 4vw, 2rem);
+     display: flex;
+     flex-direction: column;
+     gap: 1.75rem;
+   }
+   
+   .card {
+     background-color: var(--paper-raised);
+     border: 1px solid var(--border);
+     border-radius: var(--radius-md);
+     box-shadow: var(--shadow-sm);
+     padding: clamp(1.25rem, 3vw, 2rem);
+   }
+   
+   .card h1 { font-size: 1.7rem; }
+   .card h2 { font-size: 1.3rem; margin-bottom: 1rem; }
+   .muted { color: var(--ink-muted); }
+   
+   /* ---------- Botões ---------- */
+   .btn {
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     gap: 0.4rem;
+     font-family: var(--font-body);
+     font-weight: 600;
+     font-size: 0.95rem;
+     line-height: 1.2;
+     text-decoration: none;
+     color: #fdfdfa;
+     background-color: var(--forest);
+     border: 1px solid var(--forest);
+     padding: 0.7rem 1.3rem;
+     border-radius: var(--radius-sm);
+     cursor: pointer;
+     box-shadow: var(--shadow-sm);
+     transition: var(--transition);
+   }
+   
+   .btn:hover,
+   .btn:focus-visible { background-color: var(--forest-deep); border-color: var(--forest-deep); box-shadow: var(--shadow-md); }
+   
+   .btn-outline { background: transparent; color: var(--ink); border-color: var(--border); box-shadow: none; }
+   .btn-outline:hover,
+   .btn-outline:focus-visible { background: var(--gold-soft); color: var(--ink); border-color: var(--gold); box-shadow: none; }
+   
+   .btn-danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+   .btn-danger:hover,
+   .btn-danger:focus-visible { background: #8a2f24; border-color: #8a2f24; }
+   
+   .btn-sm { font-size: 0.82rem; padding: 0.4rem 0.8rem; }
+   .btn-block { width: 100%; }
+   .btn[disabled] { opacity: 0.55; cursor: not-allowed; }
+   
+   .btn-link {
+     background: none; border: none; padding: 0; font: inherit;
+     color: var(--forest); text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
+   }
+   
+   /* ---------- Formulários ---------- */
+   fieldset { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1.5rem; }
+   legend { padding: 0 0.5rem; font-size: 0.95rem; color: var(--forest); }
+   
+   .campo { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1.1rem; }
+   .campo label,
+   .rotulo { font-size: 0.9rem; font-weight: 600; }
+   
+   input[type="text"], input[type="email"], input[type="password"],
+   input[type="number"], input[type="date"], select {
+     width: 100%;
+     font-family: var(--font-body);
+     font-size: 0.95rem;
+     color: var(--ink);
+     background-color: var(--paper);
+     border: 1px solid var(--border);
+     border-radius: var(--radius-sm);
+     padding: 0.65rem 0.8rem;
+     transition: var(--transition);
+   }
+   
+   input:focus, select:focus { outline: 2px solid var(--forest); outline-offset: 1px; border-color: var(--forest); }
+   input:disabled { opacity: 0.55; cursor: not-allowed; }
+   input[type="checkbox"], input[type="radio"] { accent-color: var(--forest); width: 1rem; height: 1rem; }
+   
+   .campo-inline { flex-direction: row; align-items: center; gap: 0.6rem; }
+   .campo-inline label { font-weight: 400; }
+   .campo small { color: var(--ink-muted); font-size: 0.8rem; }
+   .erro { color: var(--danger); font-size: 0.85rem; font-weight: 500; }
+   .erro[hidden], [hidden] { display: none !important; }
+   
+   .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); column-gap: 1.25rem; }
+   
+   /* ---------- Tabelas ---------- */
+   .tabela-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-sm); }
+   table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+   th, td { text-align: left; padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+   th { background: var(--gold-soft); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
+   tbody tr:last-child td { border-bottom: none; }
+   
+   /* ---------- Barras de progresso ---------- */
+   progress {
+     appearance: none; -webkit-appearance: none;
+     width: 100%; height: 8px; border-radius: 999px; overflow: hidden;
+     background-color: var(--border); border: none;
+   }
+   progress::-webkit-progress-bar { background-color: var(--border); border-radius: 999px; }
+   progress::-webkit-progress-value { border-radius: 999px; transition: width 0.3s ease-in-out; background: var(--forest); }
+   progress::-moz-progress-bar { border-radius: 999px; background: var(--forest); }
+   progress.gold::-webkit-progress-value { background: var(--gold); }
+   progress.gold::-moz-progress-bar { background: var(--gold); }
+   progress.forest::-webkit-progress-value { background: var(--forest); }
+   progress.forest::-moz-progress-bar { background: var(--forest); }
+   
+   /* ---------- Estado vazio e aviso (toast) ---------- */
+   .vazio { text-align: center; padding: 2rem 1rem; color: var(--ink-muted); display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+   
+   .toast {
+     position: fixed; left: 50%; bottom: 1.5rem;
+     transform: translate(-50%, 20px);
+     background: var(--ink); color: var(--paper);
+     padding: 0.75rem 1.25rem; border-radius: 999px;
+     font-size: 0.9rem; box-shadow: var(--shadow-md);
+     opacity: 0; pointer-events: none; transition: var(--transition); z-index: 50;
+   }
+   .toast.visivel { opacity: 1; transform: translate(-50%, 0); }
+   
+   dialog { margin: auto; max-width: min(520px, 92vw); padding: 1.75rem; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--paper-raised); color: var(--ink); }
+   dialog::backdrop { background: rgb(0 0 0 / 0.45); }
+   dialog h2 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+   dialog p { margin-bottom: 1rem; color: var(--ink-muted); font-size: 0.92rem; }
+   
+   /* ---------- Rodapé ---------- */
+   footer { border-top: 1px solid var(--border); padding: 1.5rem clamp(1.25rem, 4vw, 3rem); text-align: center; }
+   footer p { font-size: 0.85rem; color: var(--ink-muted); }
+   
+   /* ---------- Acessibilidade ---------- */
+   :focus-visible { outline: 2px solid var(--forest); outline-offset: 2px; }
+   @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }

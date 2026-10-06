@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life-Branch | Entrar ou Cadastrar-se</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <header id="topo"></header>
+
+  <main class="pagina">
+    <p id="aviso-login" class="aviso-faixa" role="status" hidden>Faça login para acessar essa página.</p>
+
+    <div class="duas-colunas">
+      <section id="login" class="card">
+        <h2>Acessar sua conta</h2>
+        <p class="muted">Entre para acessar suas simulações salvas.</p>
+        <form id="form-login" novalidate>
+          <div class="campo">
+            <label for="login-email">E-mail:</label>
+            <input type="email" id="login-email" name="email" placeholder="seu@email.com" autocomplete="email" required>
+          </div>
+          <div class="campo">
+            <label for="login-senha">Senha:</label>
+            <input type="password" id="login-senha" name="senha" placeholder="Sua senha" autocomplete="current-password" required>
+          </div>
+          <div class="campo campo-inline">
+            <input type="checkbox" id="lembrar" name="lembrar">
+            <label for="lembrar">Lembrar de mim</label>
+          </div>
+          <p class="erro" id="erro-login" role="alert" hidden></p>
+          <button class="btn btn-block" type="submit">Entrar</button>
+        </form>
+      </section>
+
+      <section id="cadastro" class="card">
+        <h2>Criar uma nova conta</h2>
+        <p class="muted">Comece a projetar os próximos passos da sua vida hoje.</p>
+        <form id="form-cadastro" novalidate>
+          <div class="campo">
+            <label for="cad-nome">Nome Completo:</label>
+            <input type="text" id="cad-nome" name="nome" placeholder="Ex: Maria Silva" autocomplete="name" required>
+          </div>
+          <div class="campo">
+            <label for="cad-email">E-mail:</label>
+            <input type="email" id="cad-email" name="email" placeholder="seu@email.com" autocomplete="email" required>
+          </div>
+          <div class="campo">
+            <label for="cad-senha">Criar Senha:</label>
+            <input type="password" id="cad-senha" name="senha" placeholder="Mínimo 8 caracteres" minlength="8" autocomplete="new-password" required>
+          </div>
+          <div class="campo">
+            <label for="cad-confirma-senha">Confirmar Senha:</label>
+            <input type="password" id="cad-confirma-senha" name="confirma-senha" placeholder="Repita a senha" autocomplete="new-password" required>
+          </div>
+          <div class="campo campo-inline">
+            <input type="checkbox" id="termos" name="termos" required>
+            <label for="termos">Aceito os <button type="button" class="btn-link" data-abrir="dlg-termos">Termos de Uso</button> e <button type="button" class="btn-link" data-abrir="dlg-privacidade">Política de Privacidade</button></label>
+          </div>
+          <p class="erro" id="erro-cadastro" role="alert" hidden></p>
+          <button class="btn btn-block" type="submit">Criar Minha Conta</button>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <dialog id="dlg-termos">
+    <h2>Termos de Uso</h2>
+    <p>O Life-Branch é um projeto acadêmico de desenvolvimento web. As projeções são estimativas educacionais e não constituem aconselhamento financeiro, jurídico ou profissional.</p>
+    <button type="button" class="btn btn-sm" data-fechar>Entendi</button>
+  </dialog>
+
+  <dialog id="dlg-privacidade">
+    <h2>Política de Privacidade</h2>
+    <p>Neste projeto, seus dados ficam salvos apenas no armazenamento local do seu navegador. Nada é enviado a servidores nem compartilhado com terceiros.</p>
+    <button type="button" class="btn btn-sm" data-fechar>Entendi</button>
+  </dialog>
+
+  <footer id="rodape"></footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function () {
+      // Já logado? vai direto ao painel
+      if (LB.usuario()) { location.replace('visao_geral.html'); return; }
+
+      var next = LB.paramURL('next');
+      // só aceita destinos internos simples (ex.: visao_geral.html)
+      var destino = next && /^[\w\-.]+\.html(\?[\w=&%.\-]*)?$/.test(next) ? next : 'visao_geral.html';
+      if (next) document.getElementById('aviso-login').hidden = false;
+
+      function mostrarErro(id, msg) {
+        var p = document.getElementById(id);
+        p.textContent = msg;
+        p.hidden = !msg;
+      }
+
+      document.getElementById('form-login').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var email = document.getElementById('login-email').value;
+        var senha = document.getElementById('login-senha').value;
+        if (!email.trim() || !senha) { mostrarErro('erro-login', 'Preencha e-mail e senha.'); return; }
+        var r = LB.entrar(email, senha, document.getElementById('lembrar').checked);
+        if (!r.ok) { mostrarErro('erro-login', r.msg); return; }
+        location.href = destino;
+      });
+
+      document.getElementById('form-cadastro').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var nome = document.getElementById('cad-nome').value.trim();
+        var email = document.getElementById('cad-email').value.trim();
+        var s1 = document.getElementById('cad-senha').value;
+        var s2 = document.getElementById('cad-confirma-senha').value;
+        if (!nome || !email) return mostrarErro('erro-cadastro', 'Preencha nome e e-mail.');
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return mostrarErro('erro-cadastro', 'Informe um e-mail válido.');
+        if (s1.length < 8) return mostrarErro('erro-cadastro', 'A senha precisa ter no mínimo 8 caracteres.');
+        if (s1 !== s2) return mostrarErro('erro-cadastro', 'As senhas não coincidem.');
+        if (!document.getElementById('termos').checked) return mostrarErro('erro-cadastro', 'Aceite os termos para continuar.');
+        var r = LB.cadastrar(nome, email, s1);
+        if (!r.ok) return mostrarErro('erro-cadastro', r.msg);
+        location.href = destino;
+      });
+
+      document.addEventListener('click', function (e) {
+        var ab = e.target.closest('[data-abrir]');
+        if (ab) { document.getElementById(ab.dataset.abrir).showModal(); return; }
+        if (e.target.closest('[data-fechar]')) e.target.closest('dialog').close();
+      });
+    })();
+  </script>
+</body>
+</html>

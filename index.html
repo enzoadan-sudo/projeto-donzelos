@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life-Branch | Simulador de Decisões de Vida</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <header id="topo"></header>
+
+  <main>
+    <section id="hero">
+      <h1>Simule seu futuro antes de tomar decisões.</h1>
+      <p>Mudar de cidade? Mudar de carreira? O Life-Branch calcula o impacto financeiro e na sua qualidade de vida nos próximos 3, 5 ou 10 anos, usando índices de custo de vida, inflação e crescimento de renda.</p>
+
+      <div class="hero-acoes">
+        <a class="btn" href="formulario_simulaçao.html">Começar Simulação Grátis</a>
+        <a class="saiba-mais" href="#funcionalidades">Saber mais</a>
+      </div>
+
+      <article>
+        <h3>Exemplo de projeção: mudar para o interior vs. capital</h3>
+        <div>
+          <label for="estresse">Estresse Financeiro: Baixo (-35%)</label>
+          <progress id="estresse" class="gold" value="30" max="100">30%</progress>
+        </div>
+        <div>
+          <label for="qualidade">Qualidade de Vida Estimada: Alta (88/100)</label>
+          <progress id="qualidade" class="forest" value="88" max="100">88%</progress>
+        </div>
+        <div>
+          <label for="capital">Acúmulo de Capital em 5 anos: + R$ 45.000</label>
+          <progress id="capital" class="gold" value="70" max="100">70%</progress>
+        </div>
+      </article>
+    </section>
+
+    <section id="funcionalidades">
+      <h2>Como funciona</h2>
+      <p class="sub">Três passos, sem planilhas complicadas.</p>
+      <ol class="passos">
+        <li><span>1</span><h3>Conte sua situação</h3><p>Renda, custo de vida, reserva de emergência e a cidade onde você mora hoje.</p></li>
+        <li><span>2</span><h3>Escolha a mudança</h3><p>Nova carreira, nova cidade ou os dois. Informe renda esperada e custo inicial.</p></li>
+        <li><span>3</span><h3>Veja a projeção</h3><p>Compare o cenário atual com o simulado, ano a ano, e salve no seu painel.</p></li>
+      </ol>
+    </section>
+
+    <section id="recursos">
+      <h2>Por que usar o Life-Branch?</h2>
+      <p class="sub">Decisões complexas simplificadas por números claros.</p>
+      <ul class="cards">
+        <li>
+          <h3>📊 Custo de Vida Comparado</h3>
+          <p>Usamos um índice de custo de vida entre cidades, inflação e crescimento de renda para basear as simulações.</p>
+        </li>
+        <li>
+          <h3>🌿 Dois Cenários Lado a Lado</h3>
+          <p>Compare manter tudo como está com a nova opção: renda, custo, sobra mensal e patrimônio no fim do prazo.</p>
+        </li>
+        <li>
+          <h3>🛡️ Análise de Risco</h3>
+          <p>Veja a chance estimada de aperto financeiro com base na sua reserva de emergência e no seu perfil de risco.</p>
+        </li>
+      </ul>
+      <p class="aviso">As projeções são estimativas educacionais, não aconselhamento financeiro.</p>
+    </section>
+  </main>
+
+  <footer id="rodape"></footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
