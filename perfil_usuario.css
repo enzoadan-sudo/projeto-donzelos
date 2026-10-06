@@ -1,0 +1,58 @@
+/* perfil_usuario.css */
+.layout {
+    max-width: 1100px;
+    width: 100%;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    flex: 1;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  .layout main { margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1.75rem; min-width: 0; }
+  
+  @media (max-width: 768px) {
+    .layout { grid-template-columns: 1fr; }
+    aside { position: static !important; }
+  }
+  
+  aside {
+    background: var(--paper-raised);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 5.5rem;
+  }
+  aside h2 { font-size: 1.1rem; margin-bottom: 1rem; }
+  aside ul { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
+  aside a {
+    display: block; text-decoration: none; color: var(--ink-muted);
+    font-size: 0.9rem; font-weight: 500; padding: 0.5rem 0.75rem;
+    border-radius: 6px; transition: var(--transition);
+  }
+  aside a:hover { background: var(--gold-soft); color: var(--forest); }
+  aside a.perigo { color: var(--danger); font-weight: 600; }
+  
+  #resumo-perfil {
+    display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+    background: linear-gradient(135deg, var(--paper-raised), var(--gold-soft));
+  }
+  #resumo-perfil figure { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+  #resumo-perfil img { border-radius: 50%; object-fit: cover; border: 3px solid var(--forest); }
+  #resumo-perfil h1 { font-size: 1.5rem; }
+  #resumo-perfil p { color: var(--ink-muted); font-size: 0.9rem; }
+  
+  .slider { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--ink-muted); }
+  .slider input { accent-color: var(--forest); flex: 1; }
+  
+  details { background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.8rem 1rem; margin-bottom: 1rem; }
+  summary { cursor: pointer; }
+  details p { margin: 0.75rem 0; font-size: 0.9rem; color: var(--ink-muted); }
+  
+  #zona-perigo { border-color: var(--danger); }
+  #zona-perigo h2 { color: var(--danger); }
+  #zona-perigo article { display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-start; }
+  #zona-perigo h3 { font-family: var(--font-body); font-size: 1.05rem; }

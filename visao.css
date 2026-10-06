@@ -1,0 +1,26 @@
+/* visao.css — painel */
+#boas-vindas {
+    background: linear-gradient(135deg, var(--paper-raised), var(--gold-soft));
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  #boas-vindas h1 { font-size: 2rem; }
+  #boas-vindas p { color: var(--ink-muted); font-size: 1.05rem; }
+  
+  #resumo ul { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+  #resumo li {
+    background: var(--paper);
+    padding: 1.25rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  #resumo li strong { font-size: 0.85rem; color: var(--ink-muted); }
+  
+  .acoes-tabela { white-space: nowrap; }
+  .btn-excluir { color: var(--danger); }
+  .btn-excluir:hover, .btn-excluir:focus-visible { background: var(--danger); border-color: var(--danger); color: #fff; }

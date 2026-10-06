@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life-Branch | Meu Painel</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="visao.css">
+</head>
+<body>
+  <header id="topo"></header>
+
+  <main class="pagina">
+    <section id="boas-vindas" class="card">
+      <h1 id="saudacao">Olá! 👋</h1>
+      <p>Bem-vindo(a) ao seu painel. Pronto para projetar um novo cenário de vida?</p>
+      <a class="btn" href="formulario_da_simulaçao.html">➕ Criar Nova Simulação</a>
+    </section>
+
+    <section id="resumo" class="card">
+      <h2>Resumo da sua Conta</h2>
+      <ul>
+        <li><strong>Simulações Salvas</strong><span id="total-simulacoes">0 projetos</span></li>
+        <li><strong>Cenário Mais Recente</strong><span id="mais-recente">—</span></li>
+        <li><strong>Plano Atual</strong><span>Gratuito (Acadêmico)</span></li>
+      </ul>
+    </section>
+
+    <section id="simulacoes-salvas" class="card">
+      <h2>Suas Simulações Salvas</h2>
+      <div id="tabela-area"></div>
+    </section>
+  </main>
+
+  <footer id="rodape"></footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function () {
+      if (!LB.exigirLogin()) return;
+      var u = LB.usuario();
+      document.getElementById('saudacao').textContent = 'Olá, ' + u.nome.split(' ')[0] + '! 👋';
+
+      function desenhar() {
+        var lista = LB.listaSims(u.email).sort(function (a, b) { return a.criadoEm < b.criadoEm ? 1 : -1; });
+        var n = lista.length;
+        document.getElementById('total-simulacoes').textContent = n + (n === 1 ? ' projeto' : ' projetos');
+        document.getElementById('mais-recente').textContent = n
+          ? lista[0].nome + ' (criado em ' + LB.dataBR(lista[0].criadoEm) + ')' : 'Nenhum ainda';
+
+        var area = document.getElementById('tabela-area');
+        if (!n) {
+          area.innerHTML = '<div class="vazio"><p>Você ainda não salvou nenhuma simulação.</p>' +
+            '<a class="btn" href="formulario_simulacao.html">Fazer minha primeira simulação</a></div>';
+          return;
+        }
+        var linhas = lista.map(function (s) {
+          var i = s.inputs;
+          var cenario = i.tipo === 'carreira' ? 'Carreira atual vs. nova carreira'
+            : i.cidadeAtual + ' vs. ' + i.cidadeDestino;
+          return '<tr>' +
+            '<td><strong>' + LB.esc(s.nome) + '</strong></td>' +
+            '<td>' + LB.dataBR(s.criadoEm) + '</td>' +
+            '<td>' + LB.esc(cenario) + '</td>' +
+            '<td>' + LB.esc(s.resultado.nivelEstresse) + '</td>' +
+            '<td class="acoes-tabela">' +
+              '<a class="btn btn-outline btn-sm" href="tela_resultado.html?id=' + encodeURIComponent(s.id) + '">Ver Relatório</a> ' +
+              '<button class="btn btn-outline btn-sm btn-excluir" type="button" data-id="' + LB.esc(s.id) + '">Excluir</button>' +
+            '</td></tr>';
+        }).join('');
+        area.innerHTML = '<div class="tabela-wrap"><table><thead><tr>' +
+          '<th>Nome do Projeto</th><th>Data de Criação</th><th>Cenário Principal</th><th>Risco Estimado</th><th>Ações</th>' +
+          '</tr></thead><tbody>' + linhas + '</tbody></table></div>';
+      }
+
+      document.getElementById('tabela-area').addEventListener('click', function (e) {
+        var b = e.target.closest('.btn-excluir');
+        if (!b) return;
+        if (!confirm('Excluir esta simulação?')) return;
+        LB.excluirSim(b.dataset.id);
+        desenhar();
+        LB.aviso('Simulação excluída.');
+      });
+
+      desenhar();
+    })();
+  </script>
+</body>
+</html>
